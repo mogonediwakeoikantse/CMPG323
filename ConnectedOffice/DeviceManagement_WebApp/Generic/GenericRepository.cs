@@ -16,6 +16,11 @@ namespace DeviceManagement_WebApp.Generic
     {
         protected readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
 
+        public GenericRepository(ConnectedOfficeContext context)
+        {
+            _context = context;
+        }
+
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity); 

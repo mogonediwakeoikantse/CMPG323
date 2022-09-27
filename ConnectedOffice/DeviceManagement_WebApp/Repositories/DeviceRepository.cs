@@ -17,6 +17,9 @@ namespace DeviceManagement_WebApp.Repositories
 
         private readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
 
+        public DeviceRepository(ConnectedOfficeContext context) : base(context)
+        { }
+
         //GET: Devices
         public List<Device> GetAll()
         {

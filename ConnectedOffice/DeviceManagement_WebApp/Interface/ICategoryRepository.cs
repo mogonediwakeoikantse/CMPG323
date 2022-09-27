@@ -13,10 +13,14 @@ using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Interface
 {
-    public interface ICategoriesRepository<T> where T : class
+
+
+    public interface ICategoryRepository<T> where T : class
     {
 
+
         T GetById(int id);
+
         IEnumerable<T> GetAll();
 
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
@@ -29,4 +33,7 @@ namespace DeviceManagement_WebApp.Interface
 
         void RemoveRange(IEnumerable<T> entites);
     }
+
+
+    //public interface ICategoryRepository<T> where T : IGenericRepository<Category>
 }

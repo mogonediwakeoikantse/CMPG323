@@ -10,43 +10,50 @@ using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Generic;
 using DeviceManagement_WebApp.Interface;
 
+
 namespace DeviceManagement_WebApp.Repositories
 {
-    public class CategoriesRepository : GenericRepository<Category>, ICategoriesRepository<Category>
+    public class CategoriesRepository : GenericRepository<Category>, ICategoryRepository<Category>
     {
         private readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
 
+        public CategoriesRepository(ConnectedOfficeContext context) : base(context)
+        { }
+
+        
 
         //GET: Categories
-        public List<Category> GetAll()
+        public new List<Category> GetAll()
         {
             return _context.Category.ToList();
         }
+        
+
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Details(Guid id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(Guid id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+        //    var category = await _context.Category
+        //        .FirstOrDefaultAsync(m => m.CategoryId == id);
+        //    if (category == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return (IActionResult)category.CategoryName.ToList();
+        //    return (IActionResult)category.CategoryName.ToList();
 
-            //return View(category);
-        }
+        //    //return View(category);
+        //}
 
-        private IActionResult NotFound()
-        {
-            throw new NotImplementedException();
-        }
+        //private IActionResult NotFound()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
 

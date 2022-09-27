@@ -9,30 +9,34 @@ using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Repositories;
 using DeviceManagement_WebApp.Interface;
+using Microsoft.Extensions.Logging;
+using DeviceManagement_WebApp.Generic;
 
 namespace DeviceManagement_WebApp.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly ICategoriesRepository<Category> _categoryRepository;
-        //private readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
+        
+        private readonly ConnectedOfficeContext _context;
+        
+        
 
-
-        public CategoriesController(ICategoriesRepository<Category> categoryRepository)
+        public CategoriesController(ConnectedOfficeContext context)
         {
-            _categoryRepository = categoryRepository;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(_categoryRepository.GetAll());
+            return View(_context.Category.ToList());
+
         }
 
-        public async Task<IActionResult> GetById(int id)
-        {
+        //public async Task<IActionResult> GetById(int id)
+        //{
 
-            return View(_categoryRepository.GetById(id));
-        }
+        //    return View(_categoryRepository.GetById(id));
+        //}
 
         //GET: Categories
         //public async Task<IActionResult> Index()
@@ -66,22 +70,22 @@ namespace DeviceManagement_WebApp.Controllers
 
 
         // GET: Categories/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var category = await _context.Category
-        //        .FirstOrDefaultAsync(m => m.CategoryId == id);
-        //    if (category == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(category);
-        //}
+            return View(category);
+        }
 
 
 
@@ -96,94 +100,94 @@ namespace DeviceManagement_WebApp.Controllers
         // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
-        //{
-        //    category.CategoryId = Guid.NewGuid();
-        //    _context.Add(category);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
+        {
+            category.CategoryId = Guid.NewGuid();
+            _context.Add(category);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         // GET: Categories/Edit/5
-        //public async Task<IActionResult> Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var category = await _context.Category.FindAsync(id);
-        //    if (category == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(category);
-        //}
+            var category = await _context.Category.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
 
         // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
-        //{
-        //    if (id != category.CategoryId)
-        //    {
-        //        return NotFound();
-        //    }
-        //    try
-        //    {
-        //        _context.Update(category);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!CategoryExists(category.CategoryId))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //    return RedirectToAction(nameof(Index));
-        //}
+        public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
+        {
+            if (id != category.CategoryId)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _context.Update(category);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(category.CategoryId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
         // GET: Categories/Delete/5
-        //public async Task<IActionResult> Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var category = await _context.Category
-        //        .FirstOrDefaultAsync(m => m.CategoryId == id);
-        //    if (category == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(category);
-        //}
+            return View(category);
+        }
 
         // POST: Categories/Delete/5
-    //    [HttpPost, ActionName("Delete")]
-    //    [ValidateAntiForgeryToken]
-    //    public async Task<IActionResult> DeleteConfirmed(Guid id)
-    //    {
-    //        var category = await _context.Category.FindAsync(id);
-    //        _context.Category.Remove(category);
-    //        await _context.SaveChangesAsync();
-    //        return RedirectToAction(nameof(Index));
-    //    }
+        //    [HttpPost, ActionName("Delete")]
+        //    [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var category = await _context.Category.FindAsync(id);
+            _context.Category.Remove(category);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-    //    private bool CategoryExists(Guid id)
-    //    {
-    //        return _context.Category.Any(e => e.CategoryId == id);
-    //    }
+        private bool CategoryExists(Guid id)
+        {
+            return _context.Category.Any(e => e.CategoryId == id);
+        }
     }
 }

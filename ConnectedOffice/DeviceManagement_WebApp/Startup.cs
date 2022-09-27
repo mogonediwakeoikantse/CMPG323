@@ -1,4 +1,5 @@
 using DeviceManagement_WebApp.Data;
+using DeviceManagement_WebApp.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,6 +18,7 @@ namespace DeviceManagement_WebApp
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
