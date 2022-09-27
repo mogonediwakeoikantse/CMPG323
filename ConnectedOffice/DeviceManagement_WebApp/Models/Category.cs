@@ -10,6 +10,8 @@ namespace DeviceManagement_WebApp.Models
 {
     public partial class Category
     {
+        
+
         public Category()
         {
             Device = new HashSet<Device>();

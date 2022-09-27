@@ -12,5 +12,7 @@ namespace DeviceManagement_WebApp.Data
             : base(options)
         {
         }
+
+        
     }
 }
