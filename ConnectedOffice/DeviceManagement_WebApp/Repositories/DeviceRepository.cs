@@ -31,6 +31,13 @@ namespace DeviceManagement_WebApp.Repositories
             return  result.ToList();
         }
 
+        public Device GetById(Guid? id)
+        {
+            //return _context.Set<T>().Find(id);
+            return _context.Device.Find(id);
+        }
+
+
         //2
         public IEnumerable<Device> Details(Guid? id)
         {
@@ -78,16 +85,36 @@ namespace DeviceManagement_WebApp.Repositories
         // POST: Devices/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
-        //{
-        //    device.DeviceId = Guid.NewGuid();
-        //    _context.Add(device);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
+        {
+            device.DeviceId = Guid.NewGuid();
+            _context.Add(device);
+            _context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
 
+        }
+
+        //5
+        //public IEnumerable<Device> Edit(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var device =  _context.Device.FindAsync(id);
+        //    if (device == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", device.CategoryId);
+        //    //ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName", device.ZoneId);
+        //    return (IEnumerable<Device>)device;
         //}
+
+
 
 
 
@@ -125,10 +152,10 @@ namespace DeviceManagement_WebApp.Repositories
         //}
 
 
-        //public void Remove(Device entity)
-        //{
-        //    _context.Set<Device>().Remove(entity);
-        //}
+        public void Remove(Device entity)
+        {
+            _context.Set<Device>().Remove(entity);
+        }
 
         //public void RemoveRange(IEnumerable<Device> entities)
         //{
@@ -145,6 +172,11 @@ namespace DeviceManagement_WebApp.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        
+        private bool Exists(Guid id)
+        {
+            //return _categoryRepository.Find(id);
+            return _context.Device.Any(e => e.CategoryId == id);
+        }
+
     }
 }

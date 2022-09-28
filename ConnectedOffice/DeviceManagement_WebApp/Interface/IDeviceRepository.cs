@@ -26,14 +26,17 @@ namespace DeviceManagement_WebApp.Interface
 
         //void AddRange(IEnumerable<Device> entities);
 
-        //void Remove(Device entity);
+        void Remove(Device entity);
 
         //void RemoveRange(IEnumerable<Device> entites);
 
-        public IEnumerable<Device> Get();
-        public IEnumerable<Device> Details(Guid? id);
-        //public IActionResult Create(Device device);
-        public void Create(Device device);
+        IEnumerable<Device> Get();
+
+        IEnumerable<Device> Details(Guid? id);
+        
+        void Create(Device device);
+
+        void Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device);
 
     }
 }
