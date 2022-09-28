@@ -36,11 +36,7 @@ namespace DeviceManagement_WebApp.Repositories
             return _context.Set<Device>().Where(expression);
         }
 
-        //public IEnumerable<Device> GetAll()
-        //{
-        //    //return _context.Set<T>().ToList(); 
-        //    return _context.Device.ToList();
-        //}
+       
 
         public Device GetById(Guid? id)
         {
