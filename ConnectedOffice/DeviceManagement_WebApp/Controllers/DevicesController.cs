@@ -27,13 +27,13 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             //var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
-            var result = _deviceRepository.Get();
+            var result = _deviceRepository.GetAll();
             return View(result);
         }
 
         //2
         // GET: Devices/Details/5
-        public async Task<IActionResult> GetDetails(Guid? id)
+        public async Task<IActionResult> Get(Guid? id)
         {
             if (id == null)
             {
@@ -44,7 +44,7 @@ namespace DeviceManagement_WebApp.Controllers
             //    .Include(d => d.Category)
             //    .Include(d => d.Zone)
             //    .FirstOrDefaultAsync(m => m.DeviceId == id);
-            var result = _deviceRepository.Details(id);
+            var result = _deviceRepository.GetById(id);
 
             if (result == null)
             {
@@ -57,14 +57,10 @@ namespace DeviceManagement_WebApp.Controllers
 
         //3
         // GET: Devices/Create
-        public IActionResult Create(Device device)
+        public IActionResult Create()
         {
-            //ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName");
-            //ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName");
-            //ViewData["ZoneId"] = new SelectList(_deviceRepository.Zone, "ZoneId", "ZoneName");
-            //return View();
-            //_deviceRepository.Create(device);
-            return View(device);
+            
+            return View();
         }
 
 
@@ -74,12 +70,10 @@ namespace DeviceManagement_WebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
+        public async Task<IActionResult> Create([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
         {
             device.DeviceId = Guid.NewGuid();
-            _deviceRepository.Create(device);
-            //_context.Add(device);
-            //await _context.SaveChangesAsync();
+            _deviceRepository.Add(device);
             _deviceRepository.Save();
             return RedirectToAction(nameof(Index));
 
@@ -99,8 +93,7 @@ namespace DeviceManagement_WebApp.Controllers
             {
                 return NotFound();
             }
-            //ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", device.CategoryId);
-            //ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName", device.ZoneId);
+
             return View(device);
         }
 

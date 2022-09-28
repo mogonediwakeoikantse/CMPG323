@@ -17,26 +17,31 @@ namespace DeviceManagement_WebApp.Interface
     public interface IDeviceRepository
     {
 
-        //Device GetById(Guid id);
-        //IEnumerable<Device> GetAll();
+        Device GetById(Guid? id);
 
-        //IEnumerable<Device> Find(Expression<Func<Device, bool>> expression);
+        IEnumerable<Device> GetAll();
 
-        //void Add(Device entity);
+        IEnumerable<Device> Find(Expression<Func<Device, bool>> expression);
 
-        //void AddRange(IEnumerable<Device> entities);
+        void Add(Device entity);
+
+        void AddRange(IEnumerable<Device> entities);
 
         void Remove(Device entity);
 
-        //void RemoveRange(IEnumerable<Device> entites);
+        void RemoveRange(IEnumerable<Device> entites);
 
-        IEnumerable<Device> Get();
-
-        IEnumerable<Device> Details(Guid? id);
         
-        void Create(Device device);
 
-        void Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device);
+        
+
+        //IEnumerable<Device> Get();
+
+        //IEnumerable<Device> Details(Guid? id);
+        
+        //void Create(Device device);
+
+        //void Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device);
 
     }
 }

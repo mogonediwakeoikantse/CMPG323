@@ -21,15 +21,26 @@ namespace DeviceManagement_WebApp.Repositories
 
         private readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
 
-        
-
-        //1
-        public IEnumerable<Device> Get()
+        public void Add(Device entity)
         {
-            //var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
-            var result = _context.Device.Include(d => d.Category).Include(d => d.Zone);
-            return  result.ToList();
+            _context.Set<Device>().Add(entity);
         }
+
+        public void AddRange(IEnumerable<Device> entities)
+        {
+            _context.Set<Device>().AddRange(entities);
+        }
+
+        public IEnumerable<Device> Find(Expression<Func<Device, bool>> expression)
+        {
+            return _context.Set<Device>().Where(expression);
+        }
+
+        //public IEnumerable<Device> GetAll()
+        //{
+        //    //return _context.Set<T>().ToList(); 
+        //    return _context.Device.ToList();
+        //}
 
         public Device GetById(Guid? id)
         {
@@ -38,25 +49,60 @@ namespace DeviceManagement_WebApp.Repositories
         }
 
 
-        //2
-        public IEnumerable<Device> Details(Guid? id)
+        public void Remove(Device entity)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var result =  _context.Device
-                .Include(d => d.Category)
-                .Include(d => d.Zone)
-                .FirstOrDefaultAsync(m => m.DeviceId == id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return (IEnumerable<Device>)result;
+            _context.Set<Device>().Remove(entity);
         }
+
+        public void RemoveRange(IEnumerable<Device> entities)
+        {
+            _context.Set<Device>().RemoveRange(entities);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(Device entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        //1
+        public IEnumerable<Device> GetAll()
+        {
+            //var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
+            var result = _context.Device.Include(d => d.Category).Include(d => d.Zone);
+            return result.ToList();
+        }
+
+        //public Device GetById(Guid? id)
+        //{
+        //    //return _context.Set<T>().Find(id);
+        //    return _context.Device.Find(id);
+        //}
+
+
+        //2
+        //public IEnumerable<Device> Details(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var result =  _context.Device
+        //        .Include(d => d.Category)
+        //        .Include(d => d.Zone)
+        //        .FirstOrDefaultAsync(m => m.DeviceId == id);
+        //    if (result == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return (IEnumerable<Device>)result;
+        //}
 
         private IEnumerable<Device> NotFound()
         {
@@ -65,64 +111,44 @@ namespace DeviceManagement_WebApp.Repositories
 
         //3
         // GET: Devices/Create
-        public void Create(Device device)
-        {
-            //ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName");
-            //ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName");
-            //var _context.Zone(d => d.CategoryId) = new SelectList(_context.Zone, "ZoneId", "ZoneName");
-            //return View();
-            var result = _context.Device
-                .Include(d => d.CategoryId)
-                .Include(d => d.ZoneId);
-            //    .FirstOrDefaultAsync(m => m.DeviceId);
-
-            _context.Device.Add(device);
-            //return (IEnumerable<Device>)result;
-        }
-
-
-        //4
-        // POST: Devices/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
-        {
-            device.DeviceId = Guid.NewGuid();
-            _context.Add(device);
-            _context.SaveChangesAsync();
-            //return RedirectToAction(nameof(Index));
-
-        }
-
-        //5
-        //public IEnumerable<Device> Edit(Guid? id)
+        //public void Create(Device device)
         //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //    //ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName");
+        //    //ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName");
+        //    //var _context.Zone(d => d.CategoryId) = new SelectList(_context.Zone, "ZoneId", "ZoneName");
+        //    //return View();
+        //    var result = _context.Device
+        //        .Include(d => d.CategoryId)
+        //        .Include(d => d.ZoneId);
+        //    //    .FirstOrDefaultAsync(m => m.DeviceId);
 
-        //    var device =  _context.Device.FindAsync(id);
-        //    if (device == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    //ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", device.CategoryId);
-        //    //ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName", device.ZoneId);
-        //    return (IEnumerable<Device>)device;
+        //    _context.Device.Add(device);
+        //    //return (IEnumerable<Device>)result;
         //}
 
 
-
-
-
-        //GET: Devices
-        //public IEnumerable<Device> GetAll()
+        ////4
+        //// POST: Devices/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public void Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
         //{
-        //    return _context.Device.ToList();
+        //    device.DeviceId = Guid.NewGuid();
+        //    _context.Add(device);
+        //    _context.SaveChangesAsync();
+        //    //return RedirectToAction(nameof(Index));
+
         //}
+
+       
+
+
+
+
+
+        
 
         //public void Add(Device entity)
         //{
@@ -152,25 +178,25 @@ namespace DeviceManagement_WebApp.Repositories
         //}
 
 
-        public void Remove(Device entity)
-        {
-            _context.Set<Device>().Remove(entity);
-        }
+        //public void Remove(Device entity)
+        //{
+        //    _context.Set<Device>().Remove(entity);
+        //}
 
         //public void RemoveRange(IEnumerable<Device> entities)
         //{
         //    _context.Set<Device>().RemoveRange(entities);
         //}
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
+        //public void Save()
+        //{
+        //    _context.SaveChanges();
+        //}
 
-        public void Update(Device entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-        }
+        //public void Update(Device entity)
+        //{
+        //    _context.Entry(entity).State = EntityState.Modified;
+        //}
 
         private bool Exists(Guid id)
         {

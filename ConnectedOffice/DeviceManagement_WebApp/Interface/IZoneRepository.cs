@@ -14,7 +14,7 @@ namespace DeviceManagement_WebApp.Interface
     public interface IZoneRepository
     {
 
-        public Zone GetById(Guid? id);
+        Zone GetById(Guid? id);
 
         IEnumerable<Zone> GetAll();
 
