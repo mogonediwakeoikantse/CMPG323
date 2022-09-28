@@ -25,5 +25,7 @@ namespace DeviceManagement_WebApp.Generic
         void Remove(T entity);
 
         void RemoveRange(IEnumerable<T> entites);
+        void Save();
+        void Update(T entity);
     }
 }

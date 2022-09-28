@@ -16,60 +16,22 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class CategoriesController : Controller
     {
-        
-        private readonly ConnectedOfficeContext _context;
-        
-        
 
-        public CategoriesController(ConnectedOfficeContext context)
-        {
-            _context = context;
-        }
-
+        CategoriesRepository _categoryRepository = new CategoriesRepository();
+        
+        //GET: /Categories
         public async Task<IActionResult> Index()
         {
-            return View(_context.Category.ToList());
-
+            
+            //var result = _categoryRepository.GetAll();
+            //return View(result);
+            return View(_categoryRepository.GetAll());
         }
 
-        //public async Task<IActionResult> GetById(int id)
-        //{
-
-        //    return View(_categoryRepository.GetById(id));
-        //}
-
-        //GET: Categories
-        //public async Task<IActionResult> Index()
-        //{
-        //    CategoriesRepository categoriesRepository = new CategoriesRepository();
-
-        //    var results = categoriesRepository.GetAll();
-
-        //    return View(results);
-        //}
-
-        // GET: Categories
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View( _categoryRepository.GetAll());
-        //}
-
-        //GET: Categories
 
 
-        // GET: Categories/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    CategoriesRepository categoriesRepository = new CategoriesRepository();
-
-        //    var category = await categoriesRepository.Details((Guid)id);
-
-        //    return View(category);
-        //}
-
-
-
-        // GET: Categories/Details/5
+        //2
+        // GET: /Categories/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -77,8 +39,9 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = _categoryRepository.GetById(id);
+            //var category = await _context.Category
+            //    .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
                 return NotFound();
@@ -87,16 +50,14 @@ namespace DeviceManagement_WebApp.Controllers
             return View(category);
         }
 
-
-
-
-
-        // GET: Categories/Create
+        //3
+        // GET: /Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        //4
         // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -105,11 +66,14 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
             category.CategoryId = Guid.NewGuid();
-            _context.Add(category);
-            await _context.SaveChangesAsync();
+            //_context.Add(category);
+            _categoryRepository.Add(category);
+            // await _context.SaveChangesAsync();
+            _categoryRepository.Save();
             return RedirectToAction(nameof(Index));
         }
 
+        //5
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -118,7 +82,8 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            //var category = await _context.Category.FindAsync(id);
+            var category = _categoryRepository.GetById(id);
             if (category == null)
             {
                 return NotFound();
@@ -126,11 +91,12 @@ namespace DeviceManagement_WebApp.Controllers
             return View(category);
         }
 
+        //6
         // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
             if (id != category.CategoryId)
@@ -139,12 +105,16 @@ namespace DeviceManagement_WebApp.Controllers
             }
             try
             {
-                _context.Update(category);
-                await _context.SaveChangesAsync();
+                //_context.Update(category);
+                //await _context.SaveChangesAsync();
+                //_categoryRepository.Entry(category).State = EntityState.Modified;
+
+                _categoryRepository.Update(category);
+                _categoryRepository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(category.CategoryId))
+                if (id != (category.CategoryId))
                 {
                     return NotFound();
                 }
@@ -156,16 +126,18 @@ namespace DeviceManagement_WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Categories/Delete/5
+        //7
+        //GET: Categories/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            //var category = await _context.Category
+            //    .FirstOrDefaultAsync(m => m.CategoryId == id);
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = _categoryRepository.GetById(id);         
             if (category == null)
             {
                 return NotFound();
@@ -174,20 +146,25 @@ namespace DeviceManagement_WebApp.Controllers
             return View(category);
         }
 
+        //8
         // POST: Categories/Delete/5
-        //    [HttpPost, ActionName("Delete")]
-        //    [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
-            await _context.SaveChangesAsync();
+            //var category = await _context.Category.FindAsync(id);
+            //_context.Category.Remove(category);
+            //await _context.SaveChangesAsync();
+            var category = _categoryRepository.GetById(id);
+            _categoryRepository.Remove(category);
+            _categoryRepository.Save();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(Guid id)
-        {
-            return _context.Category.Any(e => e.CategoryId == id);
-        }
+        //private bool CategoryExists(Guid id)
+        //{
+        //    return _categoryRepository.Exists(Category);
+        //    //return _context.Category.Any(e => e.CategoryId == id);
+        //}
     }
 }

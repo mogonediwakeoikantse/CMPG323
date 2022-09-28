@@ -14,7 +14,7 @@ namespace DeviceManagement_WebApp.Generic
     
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
+        protected ConnectedOfficeContext _context = new ConnectedOfficeContext();
 
         public GenericRepository(ConnectedOfficeContext context)
         {
@@ -54,6 +54,16 @@ namespace DeviceManagement_WebApp.Generic
         public void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(T entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
         }
     }
 }

@@ -13,20 +13,27 @@ using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Interface
 {
-    public interface IDeviceRepository<T> where T : class
+    //public interface IDeviceRepository where T : class
+    public interface IDeviceRepository
     {
 
-        T GetById(int id);
-        IEnumerable<T> GetAll();
+        //Device GetById(Guid id);
+        //IEnumerable<Device> GetAll();
 
-        IEnumerable<T> Find(Expression<Func<T, bool>> expression);
+        //IEnumerable<Device> Find(Expression<Func<Device, bool>> expression);
 
-        void Add(T entity);
+        //void Add(Device entity);
 
-        void AddRange(IEnumerable<T> entities);
+        //void AddRange(IEnumerable<Device> entities);
 
-        void Remove(T entity);
+        //void Remove(Device entity);
 
-        void RemoveRange(IEnumerable<T> entites);
+        //void RemoveRange(IEnumerable<Device> entites);
+
+        public IEnumerable<Device> Get();
+        public IEnumerable<Device> Details(Guid? id);
+        //public IActionResult Create(Device device);
+        public void Create(Device device);
+
     }
 }

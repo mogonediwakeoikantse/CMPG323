@@ -9,51 +9,75 @@ using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Generic;
 using DeviceManagement_WebApp.Interface;
-
+using System.Linq.Expressions;
 
 namespace DeviceManagement_WebApp.Repositories
 {
-    public class CategoriesRepository : GenericRepository<Category>, ICategoryRepository<Category>
+   
+    public class CategoriesRepository : ICategoryRepository
     {
         private readonly ConnectedOfficeContext _context = new ConnectedOfficeContext();
 
-        public CategoriesRepository(ConnectedOfficeContext context) : base(context)
-        { }
 
-        
-
-        //GET: Categories
-        public new List<Category> GetAll()
+        public void Add(Category entity)
         {
+            _context.Set<Category>().Add(entity);
+        }
+
+        public void AddRange(IEnumerable<Category> entities)
+        {
+            _context.Set<Category>().AddRange(entities);
+        }
+
+        public IEnumerable<Category> Find(Expression<Func<Category, bool>> expression)
+        {
+            return _context.Set<Category>().Where(expression);
+        }
+
+        public IEnumerable<Category> GetAll()
+        {
+            //return _context.Set<T>().ToList(); 
             return _context.Category.ToList();
         }
-        
+
+       
+
+        public Category GetById(Guid? id)
+        {
+            //return _context.Set<T>().Find(id);
+            return _context.Category.Find(id);
+        }
+       
+
+        public void Remove(Category entity)
+        {
+            _context.Set<Category>().Remove(entity);
+        }
+
+        public void RemoveRange(IEnumerable<Category> entities)
+        {
+            _context.Set<Category>().RemoveRange(entities);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(Category entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+        }
 
 
-        // GET: Categories/Details/5
-        //public async Task<IActionResult> Details(Guid id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var category = await _context.Category
-        //        .FirstOrDefaultAsync(m => m.CategoryId == id);
-        //    if (category == null)
-        //    {
-        //        return NotFound();
-        //    }
+        private bool Exists(Guid id)
+        {
+            //return _categoryRepository.Find(id);
+            return _context.Category.Any(e => e.CategoryId == id);
+        }
 
-        //    return (IActionResult)category.CategoryName.ToList();
 
-        //    //return View(category);
-        //}
-
-        //private IActionResult NotFound()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
 
