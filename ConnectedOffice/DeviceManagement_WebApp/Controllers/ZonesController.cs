@@ -13,12 +13,7 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class ZonesController : Controller
     {
-        //private readonly ConnectedOfficeContext _context;
 
-        //public ZonesController(ConnectedOfficeContext context)
-        //{
-        //    _context = context;
-        //}
 
         ZoneRepository _zoneRepository = new ZoneRepository();
 
@@ -127,7 +122,7 @@ namespace DeviceManagement_WebApp.Controllers
             }
 
             var zone = _zoneRepository.GetById(id);
-               // .FirstOrDefaultAsync(m => m.ZoneId == id);
+            // .FirstOrDefaultAsync(m => m.ZoneId == id);
             if (zone == null)
             {
                 return NotFound();
@@ -141,16 +136,11 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var zone = _zoneRepository.GetById(id); 
+            var zone = _zoneRepository.GetById(id);
             _zoneRepository.Remove(zone);
             _zoneRepository.Save();
             return RedirectToAction(nameof(Index));
         }
 
-        //private bool ZoneExists(Guid id)
-        //{
-        //    return _zoneRepository.Find(id);
-            
-        //}
-    }
+    }   
 }

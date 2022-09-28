@@ -13,7 +13,7 @@ using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Interface
 {
-    //public interface IDeviceRepository where T : class
+    
     public interface IDeviceRepository
     {
 
@@ -32,16 +32,5 @@ namespace DeviceManagement_WebApp.Interface
         void RemoveRange(IEnumerable<Device> entites);
 
         
-
-        
-
-        //IEnumerable<Device> Get();
-
-        //IEnumerable<Device> Details(Guid? id);
-        
-        //void Create(Device device);
-
-        //void Create1([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device);
-
     }
 }

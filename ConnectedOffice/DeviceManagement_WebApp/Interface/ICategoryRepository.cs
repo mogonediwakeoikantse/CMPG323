@@ -13,13 +13,6 @@ using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Interface
 {
-
-    //public interface ICategoryRepository : IGenericRepository<Category>
-    //{
-        
-    //}
-
-    //public interface ICategoryRepository<T> where T : class
     public interface ICategoryRepository /*: IDisposable*/
     {
 
@@ -45,5 +38,5 @@ namespace DeviceManagement_WebApp.Interface
     }
 
 
-    //public interface ICategoryRepository<T> where T : IGenericRepository<Category>
+    
 }
