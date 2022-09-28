@@ -11,20 +11,21 @@ using System.Linq.Expressions;
 
 namespace DeviceManagement_WebApp.Interface
 {
-    public interface IZoneRepository<T> where T : class
+    public interface IZoneRepository
     {
 
-        T GetById(int id);
-        IEnumerable<T> GetAll();
+        public Zone GetById(Guid? id);
 
-        IEnumerable<T> Find(Expression<Func<T, bool>> expression);
+        IEnumerable<Zone> GetAll();
 
-        void Add(T entity);
+        IEnumerable<Zone> Find(Expression<Func<Zone, bool>> expression);
 
-        void AddRange(IEnumerable<T> entities);
+        void Add(Zone entity);
 
-        void Remove(T entity);
+        void AddRange(IEnumerable<Zone> entities);
 
-        void RemoveRange(IEnumerable<T> entites);
+        void Remove(Zone entity);
+
+        void RemoveRange(IEnumerable<Zone> entites);
     }
 }
