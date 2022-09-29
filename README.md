@@ -23,6 +23,16 @@ The link provided above also provides information about what a repository patter
 ###### * DELETE 
 {See link to read more about CRUD operations} https://www.freecodecamp.org/news/crud-operations-explained/
 
+### How To Use:
+* When a user opens the website for the first time, they will encounter the main home page which has 3 options to the left.
+* A user can register by opening the register tab
+* A user can log in also using the log in tab. The user must have registered first before attempting to log in.
+* After loggin in, the user will be able to open the different tabs named "Zone" , "Category" and "Device" 
+* In those tabs, the user will be able to perform the different CRUD operations that the website provides. 
+* Attached to this readme file, are screenshots of this WebApp in use and it provide a preview of some of the steps that have been described here. 
+
+
+
 ### Screenshots of WebApp In Use
 
 #### The Screenshot below shows the first page a user encounters when they open the website for the first time.
