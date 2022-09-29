@@ -25,8 +25,29 @@ The link provided above also provides information about what a repository patter
 
 ### Screenshots of WebApp In Use
 
+#### The Screenshot below shows the first page a user encounters when they open the website for the first time.
 
+![Screenshot (1)](https://user-images.githubusercontent.com/110536628/193025438-cfd84301-f5f9-4ddb-bf03-5d8342c6f2a2.png)
 
+#### The screenshot below shows the registration page.
+
+![Screenshot (2)](https://user-images.githubusercontent.com/110536628/193025708-580b088e-07fc-48fa-b3ec-a3c4a8d877d3.png)
+
+#### The screenshot below shows the Log In page.
+
+![Screenshot (3)](https://user-images.githubusercontent.com/110536628/193025945-92527b0d-5aed-4582-9a29-7b816e9e0a08.png)
+
+#### The screenshot below shows the edit page where a user can edit an entry. 
+
+![Screenshot (7)](https://user-images.githubusercontent.com/110536628/193026382-a2e51f5b-7cba-485a-ab25-45739cbd1266.png)
+
+#### The screenshot below shows the details of an entry. 
+
+![Screenshot (8)](https://user-images.githubusercontent.com/110536628/193026497-0c4314b9-d9e3-4596-b9d4-0c4356d3b5e4.png)
+
+#### The screenshot below previews where a user can delete an entry. 
+
+![Screenshot (9)](https://user-images.githubusercontent.com/110536628/193026735-a3f8169f-e317-4b29-b2e2-72db73b8795f.png)
 
 
 
