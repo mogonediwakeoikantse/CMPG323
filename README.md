@@ -60,6 +60,9 @@ The link provided above also provides information about what a repository patter
 ![Screenshot (9)](https://user-images.githubusercontent.com/110536628/193026735-a3f8169f-e317-4b29-b2e2-72db73b8795f.png)
 
 
+# NOTE!
+There is a project attached to this git repo under the projects tab. That project consists of information about project 3 on how it was iteratively updated throughtout. 
+
 
 ### Technologies
 
@@ -70,3 +73,6 @@ The link provided above also provides information about what a repository patter
 
 ### License
 MIT License
+
+
+
